@@ -215,6 +215,13 @@
             transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
         }
 
+        .v27-updates {
+            padding: 80px 0;
+            background: var(--dark);
+            color: white;
+            border-radius: 60px;
+            margin-bottom: 60px;
+        }
         /* КЛАВИШИ */
         #keyFlowContainer { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 11; }
         .flying-key { 
@@ -292,6 +299,15 @@
             gap: 30px; 
             margin-top: 60px; 
         }
+        .tech-item { display: flex; gap: 20px; align-items: flex-start; }
+        .tech-item .icon-box {
+            background: var(--bg-light);
+            width: 50px; height: 50px;
+            border-radius: 15px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; color: var(--primary);
+            flex-shrink: 0;
+        }
         .ss-card { 
             background: var(--dark-soft); 
             padding: 20px; 
@@ -322,7 +338,20 @@
         }
         .state-item img { width: 140px; height: 140px; object-fit: contain; margin-bottom: 24px; }
         .state-item h4 { font-size: 1.25rem; font-weight: 800; color: var(--dark); }
+        .update-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
 
+        .update-card {
+            background: rgba(255,255,255,0.05);
+            padding: 30px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: var(--transition);
+        }
         /* ДОНАТЫ */
         .donate-section { 
             padding: 80px 40px; 
@@ -362,7 +391,55 @@
             word-break: break-all;
         }
         .copy-box:hover { border-color: var(--primary); background: var(--bg-light); }
-        
+        .wardrobe-section { padding: 100px 0; text-align: center; }
+        .skins-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+        .section-tag {
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .skin-card {
+            background: #fff;
+            padding: 30px 20px;
+            border-radius: 40px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+        .skin-card:hover { transform: translateY(-10px); border-color: var(--primary); }
+        .skin-card img { width: 140px; height: 140px; object-fit: contain; margin-bottom: 20px; }
+        .skin-card h4 { font-weight: 800; margin-bottom: 5px; }
+        .skin-card span { font-size: 0.8rem; color: #64748b; font-weight: 600; }
+
+        /* TECH IMPROVEMENTS */
+        .tech-list {
+            margin-top: 60px;
+            background: #fff;
+            padding: 40px;
+            border-radius: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .tech-item { display: flex; gap: 20px; align-items: flex-start; }
+        .tech-item .icon-box {
+            background: var(--bg-light);
+            width: 50px; height: 50px;
+            border-radius: 15px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; color: var(--primary);
+            flex-shrink: 0;
+        }
         .btn-action { 
             width: 100%; 
             padding: 18px; 
@@ -412,6 +489,38 @@
             .tech-card { padding: 30px; }
             .donate-section { padding: 40px 20px; }
         }
+        .download-box {
+            background: linear-gradient(135deg, var(--primary) 0%, #a29bfe 100%);
+            padding: 80px 40px;
+            border-radius: 60px;
+            text-align: center;
+            color: white;
+            margin: 100px 0;
+        }
+        .btn-main {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: #fff;
+            color: var(--dark);
+            padding: 20px 45px;
+            border-radius: 25px;
+            font-weight: 900;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        .btn-main:hover { transform: scale(1.05); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+
+        footer { padding: 60px 0; text-align: center; color: #64748b; border-top: 1px solid #e2e8f0; }
+
+        /* RESPONSIVE */
+        @media (max-width: 968px) {
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero-text p { margin: 0 auto 35px; }
+            .tech-list { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -428,6 +537,7 @@
 <section class="hero">
     <div class="container hero-grid">
         <div class="hero-text">
+            <span class="section-tag">BIGGEST TECH UPDATE EVER</span>
             <h1>Твой личный <span>Desktop Pet</span> на Python</h1>
             <p>Умный компаньон, который живет на твоем экране. Следит за системой, развлекает при печати и становится частью твоего рабочего пространства.</p>
             <div style="display:flex; gap:20px; justify-content: flex-start; flex-wrap: wrap;" class="hero-btns">
@@ -450,27 +560,65 @@
         </div>
     </div>
 </section>
+<section class="v27-updates" id="updates">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; font-weight: 900; text-align: center;">Что нового в версии 2.7.0?</h2>
+            <p style="text-align: center; color: #94a3b8; margin-bottom: 50px;">Самое крупное техническое обновление за всю историю разработки.</p>
+            
+            <div class="update-grid">
+                <div class="update-card">
+                    <i class="fas fa-cloud-moon"></i>
+                    <h3>Музыкальный Информер</h3>
+                    <p>Система <b>Media Cloud</b> автоматически определяет треки в Brave, Chrome, Spotify. Кот показывает название песни в стильном облаке над головой.</p>
+                </div>
+                <div class="update-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>BTC Tracker</h3>
+                    <p>Прямое подключение к <b>Binance API</b>. Теперь в HUD-панели всегда актуальный курс Биткоина, обновляемый каждую минуту в реальном времени.</p>
+                </div>
+                <div class="update-card">
+                    <i class="fas fa-wave-square"></i>
+                    <h3>Активный Эквалайзер</h3>
+                    <p><b>Beat Visualizer</b> теперь синхронизирован с системной громкостью. Полоски эквалайзера прыгают в такт реальному звуку.</p>
+                </div>
+                <div class="update-card">
+                    <i class="fas fa-brain"></i>
+                    <h3>Smart HUD</h3>
+                    <p>Если музыка не играет, кот автоматически переключается на отображение случайных фактов и IT-шуток, чтобы всегда быть полезным.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+ <section class="wardrobe-section" id="wardrobe">
+        <div class="container">
+            <span class="section-tag" style="background: var(--accent);">СИСТЕМА СКИНИЗАЦИИ</span>
+            <h2 style="font-size: 2.5rem; font-weight: 900;">Гардероб CyberCat</h2>
+            <p>Меняй образы под настроение. У каждого скина свои уникальные анимации сна и злости.</p>
 
-<section class="tech-section container">
-    <div class="tech-grid">
-        <div class="tech-card">
-            <i class="fas fa-bolt"></i>
-            <h3>Tkinter Core</h3>
-            <p>Оптимизированное ядро на Python 3.10. Минимальное потребление RAM (до 40МБ) и полная прозрачность окон.</p>
+            <div class="skins-grid">
+                <div class="skin-card">
+                    <img src="cat.png" alt="Classic">
+                    <h4>Классика</h4>
+                    <span>Стандартный CyberCat</span>
+                </div>
+                <div class="skin-card">
+                    <img src="santa_cat.png" alt="Santa">
+                    <h4>Санта-Кот</h4>
+                    <span>Новогоднее настроение</span>
+                </div>
+                <div class="skin-card">
+                    <img src="catpolice.png" alt="Police">
+                    <h4>Полицейский</h4>
+                    <span>Следит за порядком</span>
+                </div>
+                <div class="skin-card">
+                    <img src="catclown.png" alt="Clown">
+                    <h4>Клоун</h4>
+                    <span>Для веселых тестов</span>
+                </div>
+            </div>
         </div>
-        <div class="tech-card">
-            <i class="fas fa-brain"></i>
-            <h3>System Intelligence</h3>
-            <p>Кот понимает, когда ты играешь, работаешь или отдыхаешь, адаптируя свое поведение под нагрузку CPU.</p>
-        </div>
-        <div class="tech-card">
-            <i class="fas fa-ghost"></i>
-            <h3>Ghost Mode</h3>
-            <p>Уникальный Overlay режим: персонаж всегда сверху всех окон, но не блокирует клики мышкой.</p>
-        </div>
-    </div>
-</section>
-
+    </section>
 <section class="showcase">
     <div class="container">
         <h2 style="text-align: center; font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; letter-spacing: -1px;">Особенности интерфейса</h2>
@@ -495,7 +643,38 @@
         </div>
     </div>
 </section>
-
+<section class="container">
+        <div class="tech-list">
+            <div class="tech-item">
+                <div class="icon-box"><i class="fas fa-microchip"></i></div>
+                <div>
+                    <h4 style="font-weight: 800;">64-bit Window Fix</h4>
+                    <p style="font-size: 0.9rem; color: #64748b;">Исправлена ошибка захвата окон на x64 системах. Браузеры определяются без сбоев.</p>
+                </div>
+            </div>
+            <div class="tech-item">
+                <div class="icon-box"><i class="fas fa-box-open"></i></div>
+                <div>
+                    <h4 style="font-weight: 800;">Resource Bundling</h4>
+                    <p style="font-size: 0.9rem; color: #64748b;">Все ассеты (скины, иконки, звуки) теперь вшиты прямо в .exe файл.</p>
+                </div>
+            </div>
+            <div class="tech-item">
+                <div class="icon-box"><i class="fas fa-mouse-pointer"></i></div>
+                <div>
+                    <h4 style="font-weight: 800;">Новый ассет "Лапка"</h4>
+                    <p style="font-size: 0.9rem; color: #64748b;">Интегрирован элемент <b>lapa.cur</b> для будущих интерактивных действий и точного наведения.</p>
+                </div>
+            </div>
+            <div class="tech-item">
+                <div class="icon-box"><i class="fas fa-save"></i></div>
+                <div>
+                    <h4 style="font-weight: 800;">Registry Sync</h4>
+                    <p style="font-size: 0.9rem; color: #64748b;">Настройки автоматически сохраняются в реестре Windows. Обновление не сбросит конфиг.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 <section class="donate-section container" id="donate">
     <h2 style="font-size: 2.5rem; font-weight: 900; letter-spacing: -1px;">Покормить кота рыбкой 🐟</h2>
     <p style="margin-top: 10px; color: #64748b;">Твоя поддержка помогает проекту развиваться и получать новые функции.</p>
@@ -529,6 +708,16 @@
     </div>
 </section>
 
+    <section class="container" id="download">
+        <div class="download-box">
+            <h2 style="font-size: 3rem; font-weight: 900; margin-bottom: 20px;">Готов познакомиться с v2.7?</h2>
+            <p style="margin-bottom: 40px; font-size: 1.2rem; opacity: 0.9;">Просто скачай новый исполняемый файл и запусти. Установка не требуется.</p>
+            <a href="https://github.com/GregoryBale/catgregorybale.github.io/releases/download/CyberCat2/CyberCat_v2.7.exe" class="btn-main">
+                <i class="fas fa-rocket"></i> Скачать CyberCat_v2.7.exe
+            </a>
+            <p style="margin-top: 25px; font-size: 0.8rem; opacity: 0.7;">Build Date: 17.01.2026 | Author: Gregory Bale</p>
+        </div>
+    </section>
 <footer>
     <div class="container">
         <div class="social-links">
@@ -711,10 +900,3 @@
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
