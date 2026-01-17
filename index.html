@@ -3,900 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberCat v2.7 — Твой Desktop Pet на Python</title>
-    <link rel="icon" href="cat.ico" sizes="any">
-    <link rel="icon" href="cat.png" type="image/png"> 
-    <link rel="apple-touch-icon" href="cat.png"> 
-    <meta name="description" content="CyberCat — интерактивный Desktop Pet на Python. Кот-компаньон для Windows: HUD системы, анимации, реакции на клавиатуру, минимальное потребление ресурсов.">
-    <meta name="keywords" content="CyberCat, desktop pet, python app, tkinter, overlay, system hud, котик на рабочем столе">
-    <meta name="author" content="Gregory Bale">
-    <meta name="copyright" content="© 2026 Gregory Bale">
-    <!-- Open Graph -->
-    <meta property="og:title" content="CyberCat v2.7 — Desktop Pet на Python">
-    <meta property="og:description" content="Интерактивный кот-компаньон для рабочего стола. HUD, реакции на клавиатуру, анимации и минимальная нагрузка на систему.">
-    <meta property="og:image" content="cat.png">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="ru_RU">
-    <!-- Telegram / Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="CyberCat v2.7">
-    <meta name="twitter:description" content="Desktop Pet на Python — умный кот на твоём экране">
-    <meta name="twitter:image" content="cat.png">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#6c5ce7">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>CyberCat — Мы переехали!</title>
+    <link rel="icon" href="cat.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
-    <!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-    (function(m,e,t,r,i,k,a){
-        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=106281202', 'ym');
-
-    ym(106281202, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/106281202" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #6c5ce7;
             --primary-hover: #5b4bc4;
-            --primary-glow: rgba(108, 92, 231, 0.3);
-            --accent: #00cec9;
-            --angry: #ff7675;
-            --sleep: #74b9ff;
             --dark: #0f172a;
-            --dark-soft: #1e293b;
             --white: #ffffff;
-            --bg-light: #f1f5f9;
-            --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition: all 0.3s ease;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        
-        body { 
-            background: var(--bg-light); 
-            color: var(--dark); 
-            overflow-x: hidden; 
-            scroll-behavior: smooth; 
-            line-height: 1.6; 
-        }
 
-        /* СНЕГ */
-        #snowCanvas { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            pointer-events: none; 
-            z-index: 1001; 
-            opacity: 0.6;
-        }
-
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-
-        /* НАВИГАЦИЯ */
-        nav {
-            position: fixed; 
-            width: 100%; 
-            top: 0; 
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.7); 
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3); 
-            padding: 16px 0;
-            transition: var(--transition);
-        }
-        
-        .nav-content { display: flex; justify-content: space-between; align-items: center; }
-        .logo { 
-            font-size: 1.5rem; 
-            font-weight: 900; 
-            color: var(--dark); 
-            text-decoration: none; 
-            letter-spacing: -1px;
+        body {
+            background: #f1f5f9;
+            color: var(--dark);
+            height: 100vh;
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-        .logo span { color: var(--primary); }
-
-        /* HERO SECTION */
-        .hero { 
-            padding: 160px 0 100px; 
-            background: radial-gradient(circle at 80% 20%, #eef2ff 0%, #f1f5f9 100%);
-            position: relative;
-        }
-        
-        .hero-grid { 
-            display: grid; 
-            grid-template-columns: 1.2fr 0.8fr; 
-            gap: 80px; 
-            align-items: center; 
-        }
-
-        .hero-text h1 { 
-            font-size: clamp(2.8rem, 6vw, 4.5rem); 
-            line-height: 1; 
-            font-weight: 900; 
-            margin-bottom: 24px; 
-            letter-spacing: -2px;
-            color: var(--dark);
-        }
-        
-        .hero-text p { 
-            font-size: 1.25rem; 
-            color: #475569; 
-            margin-bottom: 40px; 
-            max-width: 540px; 
-        }
-
-        /* ГЛАВНЫЙ ВИДЖЕТ */
-        .cat-widget {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 40px;
-            border-radius: 48px;
-            box-shadow: var(--card-shadow);
-            position: relative;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 1);
-            transition: var(--transition);
-            transform-style: preserve-3d;
-            perspective: 1000px;
-        }
-        
-        .cat-widget:hover {
-            transform: translateY(-5px) rotateX(2deg);
-        }
-
-        .status-badge {
-            position: absolute;
-            top: 25px;
-            right: 25px;
-            background: var(--primary);
-            color: white;
-            padding: 6px 16px;
-            border-radius: 100px;
-            font-weight: 800;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 12px var(--primary-glow);
-            transition: var(--transition);
-        }
-
-        .hud-display { 
-            display: flex; 
-            justify-content: center; 
-            gap: 10px; 
-            margin-bottom: 30px; 
-            flex-wrap: wrap;
-        }
-        
-        .hud-chip { 
-            background: #fff; 
-            padding: 8px 14px; 
-            border-radius: 16px; 
-            font-size: 0.8rem; 
-            font-weight: 700; 
-            display: flex; 
-            align-items: center; 
-            gap: 6px; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            border: 1px solid #f1f5f9;
-        }
-        
-        .hud-chip i { color: var(--primary); }
-
-        .cat-stage { 
-            position: relative; 
-            width: 260px; 
-            height: 260px; 
-            margin: 0 auto 30px; 
-            display: flex; 
-            align-items: center; 
             justify-content: center;
-            background: radial-gradient(circle, rgba(108, 92, 231, 0.05) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-        
-        .cat-img-main { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: contain; 
-            z-index: 10; 
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-        }
-
-        .v27-updates {
-            padding: 80px 0;
-            background: var(--dark);
-            color: white;
-            border-radius: 60px;
-            margin-bottom: 60px;
-        }
-        /* КЛАВИШИ */
-        #keyFlowContainer { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 11; }
-        .flying-key { 
-            position: absolute; 
-            font-weight: 900; 
-            font-size: 1.4rem; 
-            color: var(--primary); 
-            animation: flyUp 0.8s ease-out forwards; 
-            text-shadow: 0 0 10px rgba(108, 92, 231, 0.3);
-        }
-        
-        @keyframes flyUp { 
-            0% { opacity: 0; transform: translateY(20px) scale(0.5) rotate(0deg); }
-            20% { opacity: 1; }
-            100% { opacity: 0; transform: translateY(-150px) scale(1.5) rotate(45deg); } 
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 20px 24px;
-            border-radius: 24px;
-            border: 2px solid #e2e8f0;
-            background: #f8fafc;
-            font-size: 1rem;
-            outline: none;
-            transition: var(--transition);
             text-align: center;
-            font-weight: 600;
-            color: var(--dark);
-        }
-        
-        .input-field:focus { 
-            border-color: var(--primary); 
-            background: white; 
-            box-shadow: 0 0 0 4px var(--primary-glow);
+            overflow: hidden;
         }
 
-        /* ТЕХНИЧЕСКИЕ КАРТОЧКИ */
-        .tech-section { padding: 100px 0; }
-        .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; }
-        .tech-card { 
-            background: var(--white); 
-            padding: 48px; 
-            border-radius: 40px; 
-            box-shadow: var(--card-shadow); 
-            transition: var(--transition);
-            border: 1px solid transparent;
-        }
-        .tech-card:hover { 
-            transform: translateY(-12px); 
-            border-color: var(--primary-glow);
-        }
-        .tech-card i { 
-            font-size: 2.5rem; 
-            background: linear-gradient(45deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 28px; 
-            display: inline-block; 
-        }
-        .tech-card h3 { font-size: 1.5rem; margin-bottom: 16px; font-weight: 800; color: var(--dark); }
-        .tech-card p { color: #64748b; font-size: 1.05rem; line-height: 1.7; }
-
-        /* SHOWCASE */
-        .showcase { 
-            padding: 120px 0; 
-            background: var(--dark); 
-            color: white; 
-            border-radius: 80px 80px 0 0;
+        .move-card {
+            background: var(--white);
+            padding: 60px 40px;
+            border-radius: 48px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid rgba(255,255,255,1);
             position: relative;
-        }
-        .showcase-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
-            gap: 30px; 
-            margin-top: 60px; 
-        }
-        .tech-item { display: flex; gap: 20px; align-items: flex-start; }
-        .tech-item .icon-box {
-            background: var(--bg-light);
-            width: 50px; height: 50px;
-            border-radius: 15px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; color: var(--primary);
-            flex-shrink: 0;
-        }
-        .ss-card { 
-            background: var(--dark-soft); 
-            padding: 20px; 
-            border-radius: 32px; 
-            border: 1px solid rgba(255,255,255,0.05); 
-            transition: var(--transition);
-        }
-        .ss-card:hover { transform: scale(1.03); background: #2d3748; }
-        .ss-card img { width: 100%; border-radius: 20px; margin-bottom: 18px; }
-        .ss-card p { text-align: center; font-size: 1rem; font-weight: 600; color: #94a3b8; }
-
-        /* СОСТОЯНИЯ */
-        .states-section { padding: 120px 0; background: #fff; }
-        .states-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; }
-        .state-item { 
-            text-align: center; 
-            padding: 40px 20px; 
-            background: var(--bg-light); 
-            border-radius: 40px; 
-            transition: var(--transition);
-            border: 2px solid transparent;
-        }
-        .state-item:hover { 
-            transform: translateY(-8px); 
-            background: white; 
-            border-color: var(--primary);
-            box-shadow: var(--card-shadow);
-        }
-        .state-item img { width: 140px; height: 140px; object-fit: contain; margin-bottom: 24px; }
-        .state-item h4 { font-size: 1.25rem; font-weight: 800; color: var(--dark); }
-        .update-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+            z-index: 10;
         }
 
-        .update-card {
-            background: rgba(255,255,255,0.05);
-            padding: 30px;
-            border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: var(--transition);
+        .cat-icon {
+            width: 120px;
+            margin-bottom: 30px;
+            animation: float 3s ease-in-out infinite;
         }
-        /* ДОНАТЫ */
-        .donate-section { 
-            padding: 80px 40px; 
-            text-align: center; 
-            background: white; 
-            border-radius: 60px; 
-            margin: 60px auto; 
-            box-shadow: var(--card-shadow);
-            max-width: 1100px;
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
         }
-        .donate-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
-            gap: 20px; 
-            margin-top: 50px; 
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+            line-height: 1.1;
         }
-        .donate-card { 
-            background: #f8fafc; 
-            padding: 30px 20px; 
-            border-radius: 32px; 
-            transition: var(--transition);
-            border: 1px solid #e2e8f0;
+
+        h1 span { color: var(--primary); }
+
+        p {
+            color: #64748b;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            line-height: 1.5;
         }
-        .donate-card:hover { border-color: var(--primary); background: #fff; transform: translateY(-5px); }
-        .donate-card i { font-size: 1.8rem; margin-bottom: 15px; color: var(--dark); }
-        
-        .copy-box { 
-            background: white; 
-            padding: 14px; 
-            border-radius: 16px; 
-            font-size: 0.9rem; 
-            font-weight: 700; 
-            margin: 15px 0; 
-            cursor: pointer; 
-            transition: var(--transition); 
-            border: 2px dashed #cbd5e1;
-            word-break: break-all;
-        }
-        .copy-box:hover { border-color: var(--primary); background: var(--bg-light); }
-        .wardrobe-section { padding: 100px 0; text-align: center; }
-        .skins-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px;
-            margin-top: 50px;
-        }
-        .section-tag {
+
+        .btn-move {
+            display: inline-block;
             background: var(--primary);
             color: white;
-            padding: 4px 12px;
-            border-radius: 8px;
-            font-size: 0.75rem;
+            padding: 20px 40px;
+            border-radius: 20px;
+            text-decoration: none;
             font-weight: 800;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
-        .skin-card {
-            background: #fff;
-            padding: 30px 20px;
-            border-radius: 40px;
-            box-shadow: var(--card-shadow);
+            font-size: 1.1rem;
             transition: var(--transition);
-            border: 2px solid transparent;
-        }
-        .skin-card:hover { transform: translateY(-10px); border-color: var(--primary); }
-        .skin-card img { width: 140px; height: 140px; object-fit: contain; margin-bottom: 20px; }
-        .skin-card h4 { font-weight: 800; margin-bottom: 5px; }
-        .skin-card span { font-size: 0.8rem; color: #64748b; font-weight: 600; }
-
-        /* TECH IMPROVEMENTS */
-        .tech-list {
-            margin-top: 60px;
-            background: #fff;
-            padding: 40px;
-            border-radius: 40px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-        .tech-item { display: flex; gap: 20px; align-items: flex-start; }
-        .tech-item .icon-box {
-            background: var(--bg-light);
-            width: 50px; height: 50px;
-            border-radius: 15px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; color: var(--primary);
-            flex-shrink: 0;
-        }
-        .btn-action { 
-            width: 100%; 
-            padding: 18px; 
-            border-radius: 20px; 
-            border: none; 
-            font-weight: 800; 
-            font-size: 1rem; 
-            cursor: pointer; 
-            text-decoration: none; 
-            display: inline-block; 
-            transition: var(--transition);
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        .btn-yk { background: #ffcc00; color: #000; }
-        .btn-da { background: #ff7200; color: #fff; }
-        .btn-action:hover { transform: scale(1.02); filter: brightness(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
 
-        /* ФУТЕР */
-        footer { background: var(--dark); color: white; padding: 100px 0 60px; border-radius: 80px 80px 0 0; }
-        .social-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 50px; }
-        .soc-btn { 
-            background: rgba(255,255,255,0.05); 
-            color: white; 
-            padding: 16px 28px; 
-            border-radius: 24px; 
-            text-decoration: none; 
-            font-weight: 700; 
-            transition: var(--transition); 
-            display: flex; 
-            align-items: center; 
-            gap: 12px; 
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .soc-btn:hover { background: var(--primary); border-color: transparent; transform: translateY(-5px); }
-
-        /* АДАПТИВНОСТЬ */
-        @media (max-width: 992px) {
-            .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 60px; }
-            .hero-text p { margin-left: auto; margin-right: auto; }
-            .hero-text h1 { font-size: 3.5rem; }
-            .cat-widget { max-width: 500px; margin: 0 auto; }
+        .btn-move:hover {
+            transform: scale(1.05);
+            background: var(--primary-hover);
+            box-shadow: 0 15px 30px rgba(108, 92, 231, 0.4);
         }
 
-        @media (max-width: 600px) {
-            .hero-text h1 { font-size: 2.5rem; }
-            .tech-card { padding: 30px; }
-            .donate-section { padding: 40px 20px; }
+        .redirect-text {
+            margin-top: 25px;
+            font-size: 0.85rem;
+            color: #94a3b8;
         }
-        .download-box {
-            background: linear-gradient(135deg, var(--primary) 0%, #a29bfe 100%);
-            padding: 80px 40px;
-            border-radius: 60px;
-            text-align: center;
-            color: white;
-            margin: 100px 0;
-        }
-        .btn-main {
-            display: inline-flex;
-            align-items: center;
-            gap: 15px;
-            background: #fff;
-            color: var(--dark);
-            padding: 20px 45px;
-            border-radius: 25px;
-            font-weight: 900;
-            text-decoration: none;
-            font-size: 1.2rem;
-            transition: var(--transition);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-        }
-        .btn-main:hover { transform: scale(1.05); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
 
-        footer { padding: 60px 0; text-align: center; color: #64748b; border-top: 1px solid #e2e8f0; }
-
-        /* RESPONSIVE */
-        @media (max-width: 968px) {
-            .hero-grid { grid-template-columns: 1fr; text-align: center; }
-            .hero-text p { margin: 0 auto 35px; }
-            .tech-list { grid-template-columns: 1fr; }
+        /* Декоративный фон */
+        .bg-circle {
+            position: absolute;
+            z-index: 1;
+            background: var(--primary);
+            filter: blur(100px);
+            opacity: 0.1;
+            border-radius: 50%;
         }
     </style>
 </head>
 <body>
 
-<canvas id="snowCanvas"></canvas>
+    <div class="bg-circle" style="width: 400px; height: 400px; top: -100px; right: -100px;"></div>
+    <div class="bg-circle" style="width: 300px; height: 300px; bottom: -50px; left: -50px;"></div>
 
-<nav id="navbar">
-    <div class="container nav-content">
-        <a href="#" class="logo">Cyber<span>Cat</span>v2.7</a>
-        <a href="#donate" class="btn-action btn-yk" style="width: auto; padding: 12px 24px; font-size: 0.8rem;">ПОКОРМИТЬ</a>
-    </div>
-</nav>
-
-<section class="hero">
-    <div class="container hero-grid">
-        <div class="hero-text">
-            <span class="section-tag">BIGGEST TECH UPDATE EVER</span>
-            <h1>Твой личный <span>Desktop Pet</span> на Python</h1>
-            <p>Умный компаньон, который живет на твоем экране. Следит за системой, развлекает при печати и становится частью твоего рабочего пространства.</p>
-            <div style="display:flex; gap:20px; justify-content: flex-start; flex-wrap: wrap;" class="hero-btns">
-                <a href="https://github.com/GregoryBale/catgregorybale.github.io/releases/download/CyberCat2/CyberCat_v2.7.exe" class="btn-action" style="background:var(--primary); color:white; width:auto; padding: 20px 45px; box-shadow: 0 15px 30px var(--primary-glow);">СКАЧАТЬ v2.7<i class="fas fa-download" style="margin-left: 10px;"></i></a>
-            </div>
-        </div>
-
-        <div class="cat-widget" id="catWidget">
-            <div class="status-badge" id="badge">CHILLING</div>
-            <div class="hud-display">
-                <div class="hud-chip"><i class="fab fa-bitcoin"></i> $95,231</div>
-                <div class="hud-chip"><i class="fas fa-cloud-sun"></i> -9.8°C</div>
-                <div class="hud-chip"><i class="fas fa-microchip"></i> 12%</div>
-            </div>
-            <div class="cat-stage">
-                <div id="keyFlowContainer"></div>
-                <img src="cat.png" id="petImg" class="cat-img-main" alt="CyberCat" onerror="this.src='https://placehold.co/300x300/6c5ce7/ffffff?text=CyberCat'">
-            </div>
-            <input type="text" id="typeTrigger" class="input-field" placeholder="Начни печатать что угодно...">
-        </div>
-    </div>
-</section>
-<section class="v27-updates" id="updates">
-        <div class="container">
-            <h2 style="font-size: 2.5rem; font-weight: 900; text-align: center;">Что нового в версии 2.7.0?</h2>
-            <p style="text-align: center; color: #94a3b8; margin-bottom: 50px;">Самое крупное техническое обновление за всю историю разработки.</p>
-            
-            <div class="update-grid">
-                <div class="update-card">
-                    <i class="fas fa-cloud-moon"></i>
-                    <h3>Музыкальный Информер</h3>
-                    <p>Система <b>Media Cloud</b> автоматически определяет треки в Brave, Chrome, Spotify. Кот показывает название песни в стильном облаке над головой.</p>
-                </div>
-                <div class="update-card">
-                    <i class="fas fa-chart-line"></i>
-                    <h3>BTC Tracker</h3>
-                    <p>Прямое подключение к <b>Binance API</b>. Теперь в HUD-панели всегда актуальный курс Биткоина, обновляемый каждую минуту в реальном времени.</p>
-                </div>
-                <div class="update-card">
-                    <i class="fas fa-wave-square"></i>
-                    <h3>Активный Эквалайзер</h3>
-                    <p><b>Beat Visualizer</b> теперь синхронизирован с системной громкостью. Полоски эквалайзера прыгают в такт реальному звуку.</p>
-                </div>
-                <div class="update-card">
-                    <i class="fas fa-brain"></i>
-                    <h3>Smart HUD</h3>
-                    <p>Если музыка не играет, кот автоматически переключается на отображение случайных фактов и IT-шуток, чтобы всегда быть полезным.</p>
-                </div>
-            </div>
-        </div>
-    </section>
- <section class="wardrobe-section" id="wardrobe">
-        <div class="container">
-            <span class="section-tag" style="background: var(--accent);">СИСТЕМА СКИНИЗАЦИИ</span>
-            <h2 style="font-size: 2.5rem; font-weight: 900;">Гардероб CyberCat</h2>
-            <p>Меняй образы под настроение. У каждого скина свои уникальные анимации сна и злости.</p>
-
-            <div class="skins-grid">
-                <div class="skin-card">
-                    <img src="cat.png" alt="Classic">
-                    <h4>Классика</h4>
-                    <span>Стандартный CyberCat</span>
-                </div>
-                <div class="skin-card">
-                    <img src="santa_cat.png" alt="Santa">
-                    <h4>Санта-Кот</h4>
-                    <span>Новогоднее настроение</span>
-                </div>
-                <div class="skin-card">
-                    <img src="catpolice.png" alt="Police">
-                    <h4>Полицейский</h4>
-                    <span>Следит за порядком</span>
-                </div>
-                <div class="skin-card">
-                    <img src="catclown.png" alt="Clown">
-                    <h4>Клоун</h4>
-                    <span>Для веселых тестов</span>
-                </div>
-            </div>
-        </div>
-    </section>
-<section class="showcase">
-    <div class="container">
-        <h2 style="text-align: center; font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; letter-spacing: -1px;">Особенности интерфейса</h2>
-        <div class="showcase-grid">
-            <div class="ss-card"><img src="s5.png" onerror="this.src='https://placehold.co/400x300/2d3748/ffffff?text=s5'"><p>Снег</p></div>
-            <div class="ss-card"><img src="s4.png" onerror="this.src='https://placehold.co/400x300/2d3748/ffffff?text=Settings'"><p>Панель управления</p></div>
-            <div class="ss-card"><img src="s2.png" onerror="this.src='https://placehold.co/400x300/2d3748/ffffff?text=APM+Mode'"><p>Режим ярости (APM)</p></div>
-            <div class="ss-card"><img src="s3.png" onerror="this.src='https://placehold.co/400x300/2d3748/ffffff?text=System+HUD'"><p>Системный HUD</p></div>
-            <div class="ss-card"><img src="s1.png" onerror="this.src='https://placehold.co/400x300/2d3748/ffffff?text=Keys'"><p>Визуализация клавиш</p></div>
-        </div>
-    </div>
-</section>
-
-<section class="states-section">
-    <div class="container">
-        <h2 style="text-align: center; font-size: 2.5rem; font-weight: 900; margin-bottom: 60px; letter-spacing: -1px;">Эмоции и состояния</h2>
-        <div class="states-grid">
-            <div class="state-item"><img src="cat.png" onerror="this.src='https://placehold.co/200x200/eee/666?text=Normal'"><h4>Спокойный</h4></div>
-            <div class="state-item"><img src="p.png" onerror="this.src='https://placehold.co/200x200/eee/666?text=Work'"><h4>Работает</h4></div>
-            <div class="state-item"><img src="catangry.png" onerror="this.src='https://placehold.co/200x200/eee/666?text=Angry'"><h4>В ярости</h4></div>
-            <div class="state-item"><img src="catsleep.png" onerror="this.src='https://placehold.co/200x200/eee/666?text=Sleep'"><h4>Спит</h4></div>
-        </div>
-    </div>
-</section>
-<section class="container">
-        <div class="tech-list">
-            <div class="tech-item">
-                <div class="icon-box"><i class="fas fa-microchip"></i></div>
-                <div>
-                    <h4 style="font-weight: 800;">64-bit Window Fix</h4>
-                    <p style="font-size: 0.9rem; color: #64748b;">Исправлена ошибка захвата окон на x64 системах. Браузеры определяются без сбоев.</p>
-                </div>
-            </div>
-            <div class="tech-item">
-                <div class="icon-box"><i class="fas fa-box-open"></i></div>
-                <div>
-                    <h4 style="font-weight: 800;">Resource Bundling</h4>
-                    <p style="font-size: 0.9rem; color: #64748b;">Все ассеты (скины, иконки, звуки) теперь вшиты прямо в .exe файл.</p>
-                </div>
-            </div>
-            <div class="tech-item">
-                <div class="icon-box"><i class="fas fa-mouse-pointer"></i></div>
-                <div>
-                    <h4 style="font-weight: 800;">Новый ассет "Лапка"</h4>
-                    <p style="font-size: 0.9rem; color: #64748b;">Интегрирован элемент <b>lapa.cur</b> для будущих интерактивных действий и точного наведения.</p>
-                </div>
-            </div>
-            <div class="tech-item">
-                <div class="icon-box"><i class="fas fa-save"></i></div>
-                <div>
-                    <h4 style="font-weight: 800;">Registry Sync</h4>
-                    <p style="font-size: 0.9rem; color: #64748b;">Настройки автоматически сохраняются в реестре Windows. Обновление не сбросит конфиг.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-<section class="donate-section container" id="donate">
-    <h2 style="font-size: 2.5rem; font-weight: 900; letter-spacing: -1px;">Покормить кота рыбкой 🐟</h2>
-    <p style="margin-top: 10px; color: #64748b;">Твоя поддержка помогает проекту развиваться и получать новые функции.</p>
-    
-    <div class="donate-grid">
-        <div class="donate-card">
-            <i class="fas fa-credit-card"></i>
-            <p style="font-weight: 800; font-size: 0.8rem; opacity: 0.6; margin-bottom: 5px;">КАРТА РФ</p>
-            <div class="copy-box" onclick="copy('2202206288376127', this)">2202 2062 8837 6127</div>
-        </div>
-        <div class="donate-card">
-            <i class="fas fa-wallet"></i>
-            <p style="font-weight: 800; font-size: 0.8rem; opacity: 0.6; margin-bottom: 5px;">IDRAM (AM)</p>
-            <div class="copy-box" onclick="copy('4318290011924756', this)">4318 2900 1192 4756</div>
-        </div>
-        <div class="donate-card">
-            <i class="fab fa-bitcoin"></i>
-            <p style="font-weight: 800; font-size: 0.8rem; opacity: 0.6; margin-bottom: 5px;">USDT (TRC20)</p>
-            <div class="copy-box" style="font-size: 0.7rem;" onclick="copy('TPEzJkrVar1gTxuRuJ1cPPuyZukTZebZUQ', this)">TPEzJkrVar1gTxuRuJ1cPPuyZukTZebZUQ</div>
-        </div>
-        <div class="donate-card">
-            <i class="fas fa-shopping-cart"></i>
-            <p style="font-weight: 800; font-size: 0.8rem; opacity: 0.6; margin-bottom: 10px;">ЮKASSA</p>
-            <a href="https://yookassa.ru/my/i/aWlKZxrlk64G/l" target="_blank" class="btn-action btn-yk" style="padding: 12px; font-size: 0.8rem;">ДОНАТ</a>
-        </div>
-    </div>
-    
-    <div style="max-width: 400px; margin: 40px auto 0; padding-top: 30px; border-top: 1px solid #eee;">
-        <p style="margin-bottom: 15px; font-weight: 700; color: #4b5563;">Альтернативный способ</p>
-        <a href="https://www.donationalerts.com/r/elirugroup" target="_blank" class="btn-action btn-da">DonationAlerts</a>
-    </div>
-</section>
-
-    <section class="container" id="download">
-        <div class="download-box">
-            <h2 style="font-size: 3rem; font-weight: 900; margin-bottom: 20px;">Готов познакомиться с v2.7?</h2>
-            <p style="margin-bottom: 40px; font-size: 1.2rem; opacity: 0.9;">Просто скачай новый исполняемый файл и запусти. Установка не требуется.</p>
-            <a href="https://github.com/GregoryBale/catgregorybale.github.io/releases/download/CyberCat2/CyberCat_v2.7.exe" class="btn-main">
-                <i class="fas fa-rocket"></i> Скачать CyberCat_v2.7.exe
-            </a>
-            <p style="margin-top: 25px; font-size: 0.8rem; opacity: 0.7;">Build Date: 17.01.2026 | Author: Gregory Bale</p>
-        </div>
-    </section>
-<footer>
-    <div class="container">
-        <div class="social-links">
-            <a href="https://vk.com/gregorybale" class="soc-btn"><i class="fab fa-vk"></i> VK</a>
-            <a href="https://t.me/gregorybale" class="soc-btn"><i class="fab fa-telegram"></i> Telegram</a>
-            <a href="https://tenchat.ru/gregorymorozovidme" class="soc-btn"><i class="fas fa-briefcase"></i> TenChat</a>
-            <a href="https://github.com/GregoryBale" class="soc-btn"><i class="fab fa-github"></i> GitHub</a>
-            <a href="https://www.instagram.com/gregorymorozovidme/" class="soc-btn"><i class="fab fa-instagram"></i> Instagram*</a>
-        </div>
-        <div style="text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 40px;">
-            <p style="opacity: 0.5; font-size: 0.85rem; line-height: 1.8;">
-                *Instagram признан экстремистской организацией и запрещен на территории РФ. <br>
-                © 2026 Gregory Bale. Разработано с использованием передовых технологий Python.
-            </p>
-        </div>
-    </div>
-</footer>
-
-<script>
-    // ИНТЕРАКТИВНАЯ ЛОГИКА
-    const input = document.getElementById('typeTrigger');
-    const pet = document.getElementById('petImg');
-    const badge = document.getElementById('badge');
-    const keyContainer = document.getElementById('keyFlowContainer');
-    const widget = document.getElementById('catWidget');
-    
-    let keyBuffer = [];
-    let sleepTimeout;
-
-    function setStatus(mode) {
-        // Сброс анимаций
-        pet.style.transform = "scale(1)";
+    <div class="move-card">
+        <img src="cat.png" alt="CyberCat" class="cat-icon" onerror="this.src='https://placehold.co/120x120/6c5ce7/ffffff?text=Cat'">
+        <h1>Cyber<span>Cat</span> переехал!</h1>
+        <p>Мы обновили наш дом. Теперь все новости, скины и обновления v2.7 живут по новому адресу.</p>
         
-        if(mode === 'typing') {
-            pet.src = 'p.png';
-            badge.innerText = 'WORKING...';
-            badge.style.background = 'var(--accent)';
-            pet.style.transform = "scale(1.05)";
-        } else if(mode === 'angry') {
-            pet.src = 'catangry.png';
-            badge.innerText = 'STRESS: HIGH';
-            badge.style.background = 'var(--angry)';
-            widget.style.animation = "shake 0.2s infinite";
-        } else if(mode === 'sleep') {
-            pet.src = 'catsleep.png';
-            badge.innerText = 'SLEEPING';
-            badge.style.background = 'var(--sleep)';
-            widget.style.animation = "none";
-        } else {
-            pet.src = 'cat.png';
-            badge.innerText = 'CHILLING';
-            badge.style.background = 'var(--primary)';
-            widget.style.animation = "none";
-        }
-    }
+        <a href="https://catgregorybale.fun/" class="btn-move">Перейти на сайт</a>
+        
+        <div class="redirect-text">
+            Перенаправление на <b>catgregorybale.fun</b>...
+        </div>
+    </div>
 
-    input.addEventListener('keydown', (e) => {
-        // Создаем вылетающую букву
-        const keyEl = document.createElement('div');
-        keyEl.className = 'flying-key';
-        keyEl.innerText = e.key.length === 1 ? e.key.toUpperCase() : '⚡';
-        keyEl.style.left = (Math.random() * 60 + 20) + '%';
-        keyContainer.appendChild(keyEl);
-        setTimeout(() => keyEl.remove(), 800);
-
-        // Логика состояний
-        const now = Date.now();
-        keyBuffer.push(now);
-        keyBuffer = keyBuffer.filter(t => now - t < 2000);
-
-        clearTimeout(sleepTimeout);
-        sleepTimeout = setTimeout(() => setStatus('sleep'), 10000);
-
-        if(keyBuffer.length > 15) {
-            setStatus('angry');
-        } else {
-            setStatus('typing');
-            // Если перестал быстро печатать — через секунду возвращаем в норму
-            setTimeout(() => { 
-                const latestNow = Date.now();
-                const activeKeys = keyBuffer.filter(t => latestNow - t < 1000);
-                if(activeKeys.length === 0) setStatus('normal'); 
-            }, 1000);
-        }
-    });
-
-    // КОПИРОВАНИЕ В БУФЕР
-    async function copy(text, el) {
-        try {
-            await navigator.clipboard.writeText(text);
-            const original = el.innerText;
-            el.innerText = "СКОПИРОВАНО! ✓";
-            el.style.borderColor = "var(--accent)";
-            el.style.color = "var(--accent)";
-            el.style.background = "rgba(0, 206, 201, 0.05)";
-            
-            setTimeout(() => {
-                el.innerText = original;
-                el.style.borderColor = "#cbd5e1";
-                el.style.color = "inherit";
-                el.style.background = "white";
-            }, 2000);
-        } catch (err) {
-            console.error('Ошибка копирования:', err);
-        }
-    }
-
-    // СИСТЕМА СНЕГА (Оптимизированная)
-    const canvas = document.getElementById('snowCanvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-
-    function initSnow() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        particles = [];
-        const count = window.innerWidth < 600 ? 40 : 100;
-        for(let i=0; i<count; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                r: Math.random() * 3 + 1,
-                d: Math.random() * 0.8 + 0.2,
-                v: Math.random() * 1 - 0.5
-            });
-        }
-    }
-
-    function drawSnow() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
-        ctx.beginPath();
-        for(let p of particles) {
-            ctx.moveTo(p.x, p.y);
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-            p.y += p.d;
-            p.x += p.v;
-            if(p.y > canvas.height) p.y = -10;
-            if(p.x > canvas.width) p.x = 0;
-            if(p.x < 0) p.x = canvas.width;
-        }
-        ctx.fill();
-        requestAnimationFrame(drawSnow);
-    }
-
-    // Обработка скролла для навбара
-    window.addEventListener('scroll', () => {
-        const nav = document.getElementById('navbar');
-        if (window.scrollY > 50) {
-            nav.style.padding = "10px 0";
-            nav.style.background = "rgba(255, 255, 255, 0.9)";
-        } else {
-            nav.style.padding = "16px 0";
-            nav.style.background = "rgba(255, 255, 255, 0.7)";
-        }
-    });
-
-    window.onresize = initSnow;
-    initSnow();
-    drawSnow();
-
-    // Добавляем CSS анимацию тряски для "ярости"
-    const style = document.createElement('style');
-    style.innerHTML = `
-        @keyframes shake {
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            10% { transform: translate(-1px, -2px) rotate(-1deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); }
-            30% { transform: translate(3px, 2px) rotate(0deg); }
-            40% { transform: translate(1px, -1px) rotate(1deg); }
-            50% { transform: translate(-1px, 2px) rotate(-1deg); }
-            60% { transform: translate(-3px, 1px) rotate(0deg); }
-            70% { transform: translate(3px, 1px) rotate(-1deg); }
-            80% { transform: translate(-1px, -1px) rotate(1deg); }
-            90% { transform: translate(1px, 2px) rotate(0deg); }
-            100% { transform: translate(1px, -2px) rotate(-1deg); }
-        }
-    `;
-    document.head.appendChild(style);
-</script>
+    <script>
+        // Автоматический редирект через 5 секунд
+        setTimeout(() => {
+            window.location.href = "https://catgregorybale.fun/";
+        }, 5000);
+    </script>
 </body>
 </html>
